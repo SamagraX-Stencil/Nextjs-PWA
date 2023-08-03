@@ -1,5 +1,6 @@
 import "@component/styles/global.css";
 import "@component/styles/tailwind.css";
+import "react-toastify/dist/ReactToastify.css";
 import {
   getFromLocalForage,
   offlineChecklist,
@@ -8,6 +9,7 @@ import {
 import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
+import { OfflineSyncProvider } from "offline-sync-handler";
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -30,19 +32,22 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <Component {...pageProps} />
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        className="font-demi"
-      />
+      {/* @ts-ignore */}
+      <OfflineSyncProvider>
+        <Component {...pageProps} />
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          className="font-demi"
+        />
+      </OfflineSyncProvider>
     </>
   );
 }

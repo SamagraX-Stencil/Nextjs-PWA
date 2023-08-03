@@ -52,11 +52,7 @@ export const onlineChecklist = async () => {
   }
 };
 
-export const offlineChecklist = async () => {  
-  swal({
-    text: "You are in offline mode",
-    icon: "info",
-  })
+export const offlineChecklist = async () => {   
   toast.warn("App is now in offline mode");
   await setToLocalForage("appOffline", true);
 };
