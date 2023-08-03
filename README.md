@@ -1,3 +1,5 @@
+## Template for the Next.js PWA 
+
 Our goal was to enable offline support for Family ID, a Next.js application. By implementing caching of essential assets and data, serving API responses from service workers, and synchronizing local storage with the database, so that users can enjoy uninterrupted access even without an internet connection. This transformation will enhance user experiences and ensure smooth interactions, fostering a seamless journey for Family ID's users, regardless of their connectivity status.
 
 ### Broad Use Cases we targeted
