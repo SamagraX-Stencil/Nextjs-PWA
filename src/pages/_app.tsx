@@ -1,53 +1,40 @@
+"use client";
 import "@component/styles/global.css";
 import "@component/styles/tailwind.css";
-import "react-toastify/dist/ReactToastify.css";
-import {
-  getFromLocalForage,
-  offlineChecklist,
-  onlineChecklist,
-} from "@component/utils";
+
 import type { AppProps } from "next/app";
-import { useEffect } from "react";
-import { ToastContainer } from "react-toastify";
-import { OfflineSyncProvider } from "offline-sync-handler";
+import {  useEffect, useState } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [packageModule, setPackageModule] = useState<{
+    OfflineSyncProvider: any | undefined;
+  }>();
+
   useEffect(() => {
-    window.addEventListener("offline", offlineChecklist);
-    return () => {
-      window.removeEventListener("offline", offlineChecklist);
+    const fetchPackage = async () => {
+      try {
+        const packageModule = await import("offline-sync-handler");
+        //@ts-ignore
+        setPackageModule(packageModule);
+      } catch (error) {
+        console.error("Error loading the npm package:", error);
+      }
     };
+
+    fetchPackage();
   }, []);
 
-  const syncOnline = async () => {
-    const appOffline = await getFromLocalForage("appOffline");
-    if (appOffline && navigator.onLine) {
-      onlineChecklist();
-    }
-  };
-
-  useEffect(() => {
-    syncOnline();
-  }, []);
+  if (packageModule) {
+    return (
+      <packageModule.OfflineSyncProvider>
+        <Component {...pageProps} />
+      </packageModule.OfflineSyncProvider>
+    );
+  }
 
   return (
     <>
-      {/* @ts-ignore */}
-      <OfflineSyncProvider>
-        <Component {...pageProps} />
-        <ToastContainer
-          position="top-center"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          className="font-demi"
-        />
-      </OfflineSyncProvider>
+      <Component {...pageProps} />
     </>
   );
 }

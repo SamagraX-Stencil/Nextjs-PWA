@@ -1,5 +1,4 @@
 import axios from "axios";
-import { setToLocalForage } from "@component/utils";
 
 const baseUrl = "https://jsonplaceholder.typicode.com";
 

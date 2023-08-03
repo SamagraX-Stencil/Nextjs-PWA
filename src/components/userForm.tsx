@@ -1,9 +1,10 @@
-import { createUser } from "@component/api";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import swal from "sweetalert";
-
+import { useOfflineSyncContext } from "offline-sync-handler";
 const UserForm = () => {
+  const _ = useOfflineSyncContext();
+  console.log("--,",{_})
   const router = useRouter();
   const [user, setUser] = useState({
     id: 0,
@@ -37,12 +38,29 @@ const UserForm = () => {
     }));
   };
 
+  const onSuccess = useCallback(
+    (response: any) => {
+      if (response) {
+        swal({
+          text: "User is created successfully",
+          icon: "success",
+        });
+        router.push("/");
+      }
+    },
+    [router]
+  );
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Submitted user data:", user);
-    const response: any = await createUser(user);
-    console.log(response);
-    if (response?.status == 201) {
+    const response: any = await _?.sendRequest({
+      url: "https://jsonplaceholder.typicode.com/users",
+      method: "POST",
+      data: user,
+      onSuccess,
+    });
+
+    if (response) {
       swal({
         text: "User is created successfully",
         icon: "success",

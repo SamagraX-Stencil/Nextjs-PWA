@@ -4,6 +4,7 @@ import UserForm from '@component/components/userForm'; // Adjust the import path
 const CreateUser = () => {
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+     
       <UserForm />
     </div>
   );

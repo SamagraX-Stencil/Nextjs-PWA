@@ -1,19 +1,26 @@
-import { getUsersData } from "@component/api";
+
 import UserCard from "@component/components/user";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useOfflineSyncContext } from "offline-sync-handler";
 
 const Home = () => {
   const router = useRouter();
   const [users, getUsers]: any = useState();
+  const syncContext = useOfflineSyncContext();
+
   useEffect(() => {
     const getData = async () => {
-      const users = await getUsersData();
-      console.log(users);
+      const users = await syncContext?.sendRequest({
+        url: `https://jsonplaceholder.typicode.com/users`,
+        method: "GET",
+      });
       getUsers(users);
     };
-    getData();
-  }, []);
+    if (syncContext?.sendRequest) getData();
+  }, [syncContext]);
+
+
   const handleCreateUser = () => {
     router.push("/createUser");
   };
