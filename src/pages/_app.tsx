@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <> v1
+    <> v2
       <Component {...pageProps} />
     </>
   );
