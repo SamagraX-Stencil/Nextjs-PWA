@@ -42,3 +42,7 @@ body {
 .Toastify__toast-body {
   font-family: Mulish-medium !important;
 }
+
+::placeholder {
+  font-family: Mulish-regular;
+}

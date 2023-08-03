@@ -1,36 +1,43 @@
-import React, { useEffect, useState } from "react";
-import { cards } from "@component/config/cards";
+import { getUsersData } from "@component/api";
+import UserCard from "@component/components/user";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-const FoodCards = () => {
-  const [data, setData]: any = useState();
-
+const Home = () => {
+  const router = useRouter();
+  const [users, getUsers]: any = useState();
   useEffect(() => {
-    setData(cards);
+    const getData = async () => {
+      const users = await getUsersData();
+      console.log(users);
+      getUsers(users);
+    };
+    getData();
   }, []);
-
+  const handleCreateUser = () => {
+    router.push("/createUser");
+  };
   return (
-    <div>
-      <div className="bg-green-100 pb-10 pt-6 min-h-screen font-regular ">
-        <h1 className="mt-4 mb-8 text-center text-3xl font-bold">Sample Cards</h1>
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data && data?.map((card: any, index: number) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg p-4">
-              <h2 className="text-xl font-bold mb-2">{card.name}</h2>
-              <p className="text-gray-600 mb-4">{card.description}</p>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center text-sm text-gray-500">
-                  {card.views} Views
-                </div>
-                <div className="flex items-center text-sm text-gray-500">
-                  {card.likes} Likes
-                </div>
-              </div>
-            </div>
+    <div className="p-4 container mx-auto">
+      <h1 className="mt-4 mb-8 text-center text-3xl font-bold">Sample Users</h1>
+      <div className="flex justify-end mt-3 mb-5 px-4">
+        <button
+          onClick={handleCreateUser}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Create New User
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {users &&
+          users?.length > 0 &&
+          users?.map((user: any, index: number) => (
+            <UserCard user={user} key={index} />
           ))}
-        </div>
       </div>
     </div>
   );
 };
 
-export default FoodCards;
+export default Home;
