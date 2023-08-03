@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <packageModule.OfflineSyncProvider onStatusChange={(status:any)=>{
         console.log("---Status---",status)
       }}>
-        <>v1
+        <>v2
         <Component {...pageProps} />
         </>
       </packageModule.OfflineSyncProvider>
