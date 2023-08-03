@@ -9,7 +9,7 @@ import {
 import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
-import { OfflineSyncProvider } from "offline-sync-handler";
+// import { OfflineSyncProvider } from "offline-sync-handler";
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       {/* @ts-ignore */}
-      <OfflineSyncProvider>
+      {/* <OfflineSyncProvider> */}
         <Component {...pageProps} />
         <ToastContainer
           position="top-center"
@@ -47,7 +47,7 @@ export default function App({ Component, pageProps }: AppProps) {
           pauseOnHover
           className="font-demi"
         />
-      </OfflineSyncProvider>
+      {/* </OfflineSyncProvider> */}
     </>
   );
 }

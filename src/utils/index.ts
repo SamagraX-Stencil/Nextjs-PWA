@@ -12,7 +12,11 @@ export const setToLocalForage = async (key: string, value: any) => {
 };
 
 const performOnlineSync = async () => {
-  toast.info("App is back online ✅");
+  swal({
+    text: "App is back online ✅",
+    icon: "success"
+  })
+  // toast.info("App is back online ✅");
   await setToLocalForage("appOffline", false);
 
   let offlineSyncData: any =
