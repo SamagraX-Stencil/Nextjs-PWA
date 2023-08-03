@@ -4,7 +4,7 @@ import swal from "sweetalert";
 import { useOfflineSyncContext } from "offline-sync-handler-test";
 const UserForm = () => {
   const _ = useOfflineSyncContext();
-  console.log("--,",{_})
+
   const router = useRouter();
   const [user, setUser] = useState({
     id: 0,
