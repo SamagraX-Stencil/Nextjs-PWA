@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const fetchPackage = async () => {
       try {
-        const packageModule = await import("offline-sync-handler");
+        const packageModule = await import("offline-sync-handler-test");
         //@ts-ignore
         setPackageModule(packageModule);
       } catch (error) {

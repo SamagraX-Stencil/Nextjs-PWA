@@ -2,7 +2,7 @@
 import UserCard from "@component/components/user";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useOfflineSyncContext } from "offline-sync-handler";
+import { useOfflineSyncContext } from "offline-sync-handler-test";
 
 const Home = () => {
   const router = useRouter();
