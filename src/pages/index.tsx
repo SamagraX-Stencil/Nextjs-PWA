@@ -14,6 +14,7 @@ const Home = () => {
       const users = await syncContext?.sendRequest({
         url: `https://jsonplaceholder.typicode.com/users`,
         method: "GET",
+        identifier:'fetchUser'
       });
       getUsers(users);
     };

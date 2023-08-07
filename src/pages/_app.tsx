@@ -3,7 +3,8 @@ import "@component/styles/global.css";
 import "@component/styles/tailwind.css";
 
 import type { AppProps } from "next/app";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import swal from "sweetalert";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [packageModule, setPackageModule] = useState<{
@@ -20,24 +21,40 @@ export default function App({ Component, pageProps }: AppProps) {
         console.error("Error loading the npm package:", error);
       }
     };
-
     fetchPackage();
   }, []);
 
+  const onCallback = (data: any) => {
+    if (data.config.identifier !== "fetchUser") {
+      swal({
+        text: "User is created successfully",
+        icon: "success",
+      });
+    }
+  };
+
+  const renderOffline = ({ isOnline }: { isOnline: boolean }) => {
+    return isOnline ? null : (
+      <div style={{ backgroundColor: "red", color: "white" }} className="text-center">
+        Not Connected to Internet
+      </div>
+    );
+  };
   if (packageModule) {
     return (
-      <packageModule.OfflineSyncProvider onStatusChange={(status:any)=>{
-        console.log("---Status---",status)
-      }}>
-        <>v2
-        <Component {...pageProps} />
+      <packageModule.OfflineSyncProvider
+        render={renderOffline}
+        onCallback={onCallback}
+      >
+        <>
+          <Component {...pageProps} />
         </>
       </packageModule.OfflineSyncProvider>
     );
   }
 
   return (
-    <> v2
+    <>
       <Component {...pageProps} />
     </>
   );

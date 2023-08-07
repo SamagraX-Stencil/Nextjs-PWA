@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import swal from "sweetalert";
 import { useOfflineSyncContext } from "offline-sync-handler-test";
 const UserForm = () => {
   const _ = useOfflineSyncContext();
-
+  const [data, setData] = useState(null);
   const router = useRouter();
   const [user, setUser] = useState({
     id: 0,
@@ -38,18 +38,12 @@ const UserForm = () => {
     }));
   };
 
-  const onSuccess = useCallback(
-    (response: any) => {
-      if (response) {
-        swal({
-          text: "User is created successfully",
-          icon: "success",
-        });
-        router.push("/");
-      }
-    },
-    [router]
-  );
+
+  const onSuccess = (data: any) => {
+    console.log("venom:  onSuccess: triggered", { data });
+    setData(data);
+    window.alert("hello");
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -72,6 +66,7 @@ const UserForm = () => {
   return (
     <div className="max-w-lg mx-auto my-10 p-4 bg-white rounded-lg shadow-lg">
       <h1 className="mt-4 mb-8 text-center text-3xl font-bold">Create User</h1>
+      {data && JSON.stringify(data)}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
