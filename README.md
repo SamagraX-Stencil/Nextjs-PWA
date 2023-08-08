@@ -16,5 +16,3 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 ## Contribute
 Show your ❤️ and support by giving a ⭐. Any suggestions are welcome!
-
-
