@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import swal from "sweetalert";
-import { useOfflineSyncContext } from "offline-sync-handler-test";
+import { useOfflineSyncContext } from "offline-sync-handler";
 const UserForm = () => {
   const _ = useOfflineSyncContext();
   const [data, setData] = useState(null);
@@ -39,11 +39,7 @@ const UserForm = () => {
   };
 
 
-  const onSuccess = (data: any) => {
-    console.log("venom:  onSuccess: triggered", { data });
-    setData(data);
-    window.alert("hello");
-  };
+ 
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -51,7 +47,6 @@ const UserForm = () => {
       url: "https://jsonplaceholder.typicode.com/users",
       method: "POST",
       data: user,
-      onSuccess,
     });
 
     if (response) {

@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const fetchPackage = async () => {
       try {
-        const packageModule = await import("offline-sync-handler-test");
+        const packageModule = await import("offline-sync-handler");
         //@ts-ignore
         setPackageModule(packageModule);
       } catch (error) {
@@ -24,8 +24,8 @@ export default function App({ Component, pageProps }: AppProps) {
     fetchPackage();
   }, []);
 
-  const onCallback = (data: any) => {
-    if (data.config.identifier !== "fetchUser") {
+  const onSyncSuccess = (response: any) => {
+    if (response.config.identifier !== "fetchUser") {
       swal({
         text: "User is created successfully",
         icon: "success",
@@ -44,7 +44,7 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
       <packageModule.OfflineSyncProvider
         render={renderOffline}
-        onCallback={onCallback}
+        onSyncSuccess={onSyncSuccess}
       >
         <>
           <Component {...pageProps} />
