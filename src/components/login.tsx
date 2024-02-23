@@ -39,6 +39,7 @@ const LoginForm = () => {
 	};
 
 	const handleSubmit = async (e: any) => {
+		e.preventDefault();
 		swal({
 			text: 'User is signed up',
 			icon: 'success'
